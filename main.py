@@ -7,7 +7,7 @@ st.set_page_config(page_title="Interview Practice App", layout="centered")
 
 # --- UI ---
 st.title("Interview Practice App")
-st.subheader("Practice interview questions with AI 🤖")
+st.subheader("Practice interview questions with AI")
 
 user_input = st.text_area("Enter your topic, question, or job role:")
 
@@ -22,7 +22,14 @@ with st.sidebar:
     num_questions = st.slider("Number of Questions", 1, 5, 1)
 
 # Dynamically calculate max tokens (200 tokens per question)
-max_tokens = num_questions * 200
+scaling_factor = {
+    "Zero-shot"       : 1.0,
+    "Few-shot"        : 1.25,
+    "Chain-of-thought": 1.5
+}.get(prompt_style, 1.0)
+
+max_tokens = int(num_questions * 200 * scaling_factor)
+
 
 # --- Prompt Style Mapping ---
 prompt_map = {
@@ -52,8 +59,8 @@ if st.button("Generate Interview Question"):
                         messages    = messages,
                         temperature = temperature,
                         model       = "gpt-4o-mini",
-                        max_tokens  = max_tokens
-                    )
+                        max_tokens  = max_tokens)
+    
 
     st.markdown("### AI-Generated Interview Response")
     st.write(response)
