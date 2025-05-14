@@ -1,4 +1,5 @@
 import os
+from   openai import OpenAI
 
 # Load API key from local file
 with open('D:\\Visual Studio Code\\desktop_openai.txt', 'r') as f:
@@ -6,3 +7,22 @@ with open('D:\\Visual Studio Code\\desktop_openai.txt', 'r') as f:
 
 # Access the key from environment
 api_key = os.getenv("OPENAI_API_KEY")
+
+# Create AOpenAI cleint using loaded key
+api_key = os.getenv("OPENAI_API_KEY")
+client  = OpenAI(api_key= api_key)
+
+
+
+# Chat copmpletion wrapper
+def get_completion(messages, model = "gpt-4o-mini", temperature = 0.5):
+    """
+    Call the OpenAI Chat API with the given messages and parameters.
+    """
+    response = client.chat.completions.create(
+                                            model       = model,
+                                            messages    = messages,
+                                            temperature = temperature,
+                                            max_tokens   = 300)
+    
+    return response.choices[0].message.content
