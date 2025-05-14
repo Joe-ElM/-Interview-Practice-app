@@ -21,7 +21,14 @@ with st.sidebar:
     num_questions  = st.slider("Number of Questions", 1, 5, 1)
 
 # --- Token Budget ---
-max_tokens = num_questions * 200
+scaling_factor = {
+                "Zero-shot"       : 1.0,
+                "Few-shot"        : 1.25,
+                "Chain-of-thought": 1.5
+}.get(prompt_style, 1.0)
+
+max_tokens = int(num_questions * 200 * scaling_factor)
+
 
 # --- Prompt Strategy Mapping ---
 prompt_map = {
