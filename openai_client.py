@@ -20,7 +20,10 @@ client  = OpenAI(api_key= api_key)
 
 
 # Chat copmpletion wrapper
-def get_completion(messages, model = "gpt-4o-mini", temperature = 0.5):
+def get_completion(messages, 
+                   model       = "gpt-4o-mini", 
+                   temperature = 0.5, 
+                   max_tokens  = 200):
     """
     Call the OpenAI Chat API with the given messages and parameters.
     """
@@ -28,6 +31,6 @@ def get_completion(messages, model = "gpt-4o-mini", temperature = 0.5):
                                             model       = model,
                                             messages    = messages,
                                             temperature = temperature,
-                                            max_tokens   = 300)
+                                            max_tokens   = max_tokens)
     
     return response.choices[0].message.content
