@@ -1,9 +1,11 @@
 import os
+import streamlit as st
 from   openai import OpenAI
 
+
 # Load API key from local file
-with open('D:\\Visual Studio Code\\desktop_openai.txt', 'r') as f:
-    os.environ['OPENAI_API_KEY'] = f.read().strip()
+# with open('D:\\Visual Studio Code\\desktop_openai.txt', 'r') as f:
+#     os.environ['OPENAI_API_KEY'] = f.read().strip()
 
 # Access the key from environment
 # api_key = os.getenv("OPENAI_API_KEY")
@@ -12,7 +14,7 @@ with open('D:\\Visual Studio Code\\desktop_openai.txt', 'r') as f:
 api_key = st.secrets["OPENAI_API_KEY"]
 
 # Create AOpenAI cleint using loaded key
-api_key = os.getenv("OPENAI_API_KEY")
+# api_key = os.getenv("OPENAI_API_KEY")
 client  = OpenAI(api_key= api_key)
 
 
