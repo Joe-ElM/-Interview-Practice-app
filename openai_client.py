@@ -6,7 +6,10 @@ with open('D:\\Visual Studio Code\\desktop_openai.txt', 'r') as f:
     os.environ['OPENAI_API_KEY'] = f.read().strip()
 
 # Access the key from environment
-api_key = os.getenv("OPENAI_API_KEY")
+# api_key = os.getenv("OPENAI_API_KEY")
+
+# Load API key from Streamlit secrets (for deployment)
+api_key = st.secrets["OPENAI_API_KEY"]
 
 # Create AOpenAI cleint using loaded key
 api_key = os.getenv("OPENAI_API_KEY")
