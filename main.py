@@ -1,5 +1,5 @@
 import streamlit as st
-from   openai_client import get_completion
+from openai_client import get_completion
 import prompts  # this will provide the system messages based on selected strategy
 import guards   # for input validation
 
@@ -19,11 +19,12 @@ with st.sidebar:
     difficulty = st.selectbox("Select Difficulty Level", ["Easy", "Medium", "Hard"])
     response_style = st.selectbox("Response Detail Level", ["Concise", "Detailed"])
     temperature = st.slider("Creativity (Temperature)", 0.0, 1.0, 0.5, step=0.1)
+    num_questions = st.slider("Number of Questions", 1, 5, 1)
 
 # --- Prompt Style Mapping ---
 prompt_map = {
-    "Zero-shot": prompts.get_zero_shot_prompt,
-    "Few-shot": prompts.get_few_shot_prompt,
+    "Zero-shot"       : prompts.get_zero_shot_prompt,
+    "Few-shot"        : prompts.get_few_shot_prompt,
     "Chain-of-thought": prompts.get_chain_of_thought_prompt,
 }
 
@@ -36,8 +37,8 @@ if st.button("Generate Interview Question"):
     # Base system prompt from selected style
     system_prompt = prompt_map.get(prompt_style, lambda: "You are an interview coach.")()
 
-    # Enhance system prompt with difficulty and response style
-    system_prompt += f" Generate a {difficulty.lower()} interview question. Respond with a {response_style.lower()} answer."
+    # Enhance system prompt with difficulty, response style, and question count
+    system_prompt += f" Generate {num_questions} {difficulty.lower()} interview question(s). Respond with {response_style.lower()} answers."
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -45,10 +46,10 @@ if st.button("Generate Interview Question"):
     ]
 
     response = get_completion(
-        messages=messages,
-        temperature=temperature,
-        model="gpt-4o-mini"
-    )
+                            messages    = messages,
+                            temperature = temperature,
+                            model       = "gpt-4o"
+                        )
 
     st.markdown("### AI-Generated Interview Response")
     st.write(response)
