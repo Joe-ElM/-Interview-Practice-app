@@ -18,7 +18,7 @@ with st.sidebar:
     ])
     difficulty = st.selectbox("Select Difficulty Level", ["Easy", "Medium", "Hard"])
     response_style = st.selectbox("Response Detail Level", ["Concise", "Detailed"])
-    temperature = st.slider("Creativity (Temperature)", 0.0, 1.0, 0.5, step=0.2)
+    temperature = st.slider("Creativity (Temperature)", 0.0, 1.0, 0.5, step=0.1)
 
 # --- Prompt Style Mapping ---
 prompt_map = {
