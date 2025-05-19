@@ -1,4 +1,4 @@
-import os
+# import os
 import streamlit as st
 from   openai import OpenAI
 
@@ -31,6 +31,6 @@ def get_completion(messages,
                                             model       = model,
                                             messages    = messages,
                                             temperature = temperature,
-                                            max_tokens   = max_tokens)
+                                            max_tokens  = max_tokens)
     
     return response.choices[0].message.content
